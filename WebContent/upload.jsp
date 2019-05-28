@@ -182,13 +182,41 @@
 							
 									<form action="UploadDownloadFileServlet" method="post"
 							enctype="multipart/form-data">
-									<h2 class="text-center">Solicitação de Diagnóstico</h2>
+									<h1 class="text-center">Anexo de Imagens</h1>
+									<h2 class="text-center">Anexar documentação para melhor analise no diagnóstico</h2>
 									<div class="form-group">
-										<select class="form-control" id="exampleFormControlSelect1"
+<!-- 										<select class="form-control" id="exampleFormControlSelect1"
 											name="paciente">
 											<option disabled selected>Paciente</option>
 											
-										</select>
+										</select> -->
+										
+						<select class="form-control" id="exampleFormControlSelect1" name="paciente">
+                        <option disabled selected>Paciente</option>
+						<%if(cod==null){
+								for(int i=0;i<listaPacientes.size();i++){
+									out.write("<option>");
+									out.write(listaPacientes.get(i).getCd_paciente() + " - " + listaPacientes.get(i).getNm_paciente());
+									out.write("</option>");
+								}
+							}else{
+								for(int i=0;i<listaPacientes.size();i++){ 	
+									System.out.println("Codigo: " + cod + "cd_paciente " + listaPacientes.get(i).getCd_paciente());
+									if(listaPacientes.get(i).getCd_paciente()==Integer.parseInt(p.getCd_paciente())){
+										System.out.println("Tste");
+										out.write("<option selected>");
+										out.write(listaPacientes.get(i).getCd_paciente() + " - " + listaPacientes.get(i).getNm_paciente());
+										out.write("</option>");
+									}else{
+										System.out.println("Tste");
+										out.write("<option>");
+										out.write(listaPacientes.get(i).getCd_paciente() + " - " + listaPacientes.get(i).getNm_paciente());
+										out.write("</option>");
+									}
+								}
+							}
+						%>
+                    </select>
 									</div>
 									
 									<div class="form-group">
