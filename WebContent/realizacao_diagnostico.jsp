@@ -66,12 +66,11 @@
 
 	String codigoUsuario = "";
 
-	for(Cookie cookie: cookies){
-		if(cookie.getName().equals("codigo")){
+	for (Cookie cookie : cookies) {
+		if (cookie.getName().equals("codigo")) {
 			codigoUsuario = cookie.getValue();
 		}
 	}
-
 
 	String paciente = request.getParameter("paciente");
 	String diagnostico = request.getParameter("diagnostico");
@@ -79,10 +78,10 @@
 	String anexo = request.getParameter("anexo");
 	String descricao = request.getParameter("descricao");
 	Pedido p = new Pedido();
-	Pedido pe = new Pedido();	
+	Pedido pe = new Pedido();
 	Diagnostico d = new Diagnostico();
-	
-	if(paciente!=null && diagnostico != null){
+
+	if (paciente != null && diagnostico != null) {
 		String array[] = new String[3];
 		array = paciente.split(" - ");
 		paciente = array[0];
@@ -90,7 +89,6 @@
 		diagnostico = array[0];
 		array = especialidade.split(" - ");
 		especialidade = array[0];
-	
 
 		p.setCd_diagnostico(diagnostico);
 		p.setCd_especialidade(especialidade);
@@ -98,63 +96,60 @@
 		p.setDs_diagnostico(descricao);
 		p.setCd_usuario(codigoUsuario);
 		p.setCd_status("PENDENTE");
-		
-		
+
 	}
 
 	String cod = " ";
 	cod = request.getParameter("cod");
-	if(cod!=" "&&cod!=null){
+	if (cod != " " && cod != null) {
 		p.setCd_pedido(cod);
 	}
 
 	System.out.println("Diagnostico: " + diagnostico + " especialidade: " + especialidade + " codigo: " + cod);
 	if (diagnostico != null && especialidade != null) {
-		if(cod!=null){
-				if(pe.UpdatePedido(p)){
-					out.write("<script>alert(\"Solicitação atualizada com sucesso!\");</script>");
-				}else{
-					out.write("<script>alert(\"Erro ao atualizar solicitação!\");</script>");
-				}
-			}else{
+		if (cod != null) {
+			if (pe.UpdatePedido(p)) {
+				out.write("<script>alert(\"Solicitação atualizada com sucesso!\");</script>");
+			} else {
+				out.write("<script>alert(\"Erro ao atualizar solicitação!\");</script>");
+			}
+		} else {
 			if (pe.InsertPedido(p)) {
 				out.write("<script>alert(\"Solicitação cadastrada com sucesso!\");</script>");
-				response.sendRedirect("Upload.jsp");
+				response.sendRedirect("upload.jsp?cod=" + pe.getCodUltimoPedido());
+
 			} else {
 				out.write("<script>alert(\"Erro ao cadastrar solicitação!\");</script>");
 			}
 		}
 	}
-	
-	
+
 	List<Pedido> lista = new ArrayList<Pedido>();
-    
-    
-	if(cod==null){
+
+	if (cod == null) {
 		p.setCd_data_hr("");
 		p.setCd_paciente("");
 		p.setCd_status("");
 		p.setCd_usuario("");
 		p.setDs_observacao("");
-	}else{
-		lista= p.BuscaPedido();
-		for(int i=0;i<lista.size();i++){
-			if(String.valueOf(lista.get(i).getCd_pedido()).equals(cod)){
+	} else {
+		lista = p.BuscaPedido();
+		for (int i = 0; i < lista.size(); i++) {
+			if (String.valueOf(lista.get(i).getCd_pedido()).equals(cod)) {
 				p = lista.get(i);
 			}
 		}
 	}
-	
+
 	EspecialidadeCRUD ec = new EspecialidadeCRUD();
 
 	List<Especialidade> listaEspecialidades = new ArrayList<Especialidade>();
-    
-    listaEspecialidades = ec.buscar();
-	
-    Paciente pac = new Paciente();
-    List<Paciente> listaPacientes = new ArrayList<Paciente>();
-    listaPacientes = pac.BuscaPaciente();
 
+	listaEspecialidades = ec.buscar();
+
+	Paciente pac = new Paciente();
+	List<Paciente> listaPacientes = new ArrayList<Paciente>();
+	listaPacientes = pac.BuscaPaciente();
 %>
 
 <body id="page-top">
@@ -171,108 +166,85 @@
 					<li class="breadcrumb-item"><a
 						href="solicitacao_diagnostico.jsp">Solicitação de Diagnóstico</a>
 					</li>
-					<li class="breadcrumb-item active">Cadastrar</li>
+					<li class="breadcrumb-item active">Analisar</li>
 				</ol>
 
 				<div class="container" background="gray">
 					<div class="row jumbotron">
 
 						<div class="col">
-							<div class="login-form">
-							
-									<form action="UploadDownloadFileServlet" method="post"
-							enctype="multipart/form-data">
-									<h2 class="text-center">Solicitação de Diagnóstico</h2>
-									<div class="form-group">
-										<select class="form-control" id="exampleFormControlSelect1"
-											name="paciente">
-											<option disabled selected>Paciente</option>
-											
-										</select>
-									</div>
-									
-									<div class="form-group">
-										<label for="exampleFormControlFile1">Anexar Arquivo</label> 
-										<input
-											type="file" class="form-control-file" name="fileName"
-											id="exampleFormControlFile1">
-									</div>
-										<div class="form-group">
-											<button type="submit" class="btn btn-success btn-block">Enviar Imagem</button>
-										</div>
-									</div>
+							<h2 class="text-center">Realização de Diagnóstico</h2>
+							<div class="container jumbotron">
+								<div class="col-sm-2"><h5>Nome:</h3></div>
+								<div class="col-sm-8">nomenome</div>
+							</div>
+								
+						</div>
+					</div>
+					<!-- /.container-fluid -->
+
+					<!-- Sticky Footer -->
+					<footer class="sticky-footer">
+						<div class="container my-auto">
+							<div class="copyright text-center my-auto">
+								<span>Copyright © Sistema Tele 2019</span>
 							</div>
 						</div>
+					</footer>
 
-						</form>
-
-						
-					</div>
 				</div>
-				<!-- /.container-fluid -->
+				<!-- /.content-wrapper -->
 
-				<!-- Sticky Footer -->
-				<footer class="sticky-footer">
-					<div class="container my-auto">
-						<div class="copyright text-center my-auto">
-							<span>Copyright © Sistema Tele 2019</span>
+			</div>
+			<!-- /#wrapper -->
+
+			<!-- Scroll to Top Button-->
+			<a class="scroll-to-top rounded" href="#page-top"> <i
+				class="fas fa-angle-up"></i>
+			</a>
+
+			<!-- Logout Modal-->
+			<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Ready to
+								Leave?</h5>
+							<button class="close" type="button" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">Select "Logout" below if you are
+							ready to end your current session.</div>
+						<div class="modal-footer">
+							<button class="btn btn-secondary" type="button"
+								data-dismiss="modal">Cancel</button>
+							<a class="btn btn-primary" href="login.html">Logout</a>
 						</div>
 					</div>
-				</footer>
-
-			</div>
-			<!-- /.content-wrapper -->
-
-		</div>
-		<!-- /#wrapper -->
-
-		<!-- Scroll to Top Button-->
-		<a class="scroll-to-top rounded" href="#page-top"> <i
-			class="fas fa-angle-up"></i>
-		</a>
-
-		<!-- Logout Modal-->
-		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Ready to
-							Leave?</h5>
-						<button class="close" type="button" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">×</span>
-						</button>
-					</div>
-					<div class="modal-body">Select "Logout" below if you are
-						ready to end your current session.</div>
-					<div class="modal-footer">
-						<button class="btn btn-secondary" type="button"
-							data-dismiss="modal">Cancel</button>
-						<a class="btn btn-primary" href="login.html">Logout</a>
-					</div>
 				</div>
 			</div>
-		</div>
 
-		<!-- Bootstrap core JavaScript-->
-		<script src="vendor/jquery/jquery.min.js"></script>
-		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+			<!-- Bootstrap core JavaScript-->
+			<script src="vendor/jquery/jquery.min.js"></script>
+			<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-		<!-- Core plugin JavaScript-->
-		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+			<!-- Core plugin JavaScript-->
+			<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-		<!-- Page level plugin JavaScript-->
-		<script src="vendor/chart.js/Chart.min.js"></script>
-		<script src="vendor/datatables/jquery.dataTables.js"></script>
-		<script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+			<!-- Page level plugin JavaScript-->
+			<script src="vendor/chart.js/Chart.min.js"></script>
+			<script src="vendor/datatables/jquery.dataTables.js"></script>
+			<script src="vendor/datatables/dataTables.bootstrap4.js"></script>
 
-		<!-- Custom scripts for all pages-->
-		<script src="js/sb-admin.min.js"></script>
+			<!-- Custom scripts for all pages-->
+			<script src="js/sb-admin.min.js"></script>
 
-		<!-- Demo scripts for this page-->
-		<script src="js/demo/datatables-demo.js"></script>
-		<script src="js/demo/chart-area-demo.js"></script>
+			<!-- Demo scripts for this page-->
+			<script src="js/demo/datatables-demo.js"></script>
+			<script src="js/demo/chart-area-demo.js"></script>
 </body>
 
 </html>

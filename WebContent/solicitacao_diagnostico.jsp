@@ -54,6 +54,11 @@
 	Cookie[] cookies = request.getCookies();
 
 	String codigoUsuario = "";
+	
+	String cadastro = request.getParameter("cadastro");
+	if(cadastro!=null){
+		out.print("<script>alert(\"Solicitação cadastrada com sucesso!\");</script>");
+	}
 
 	for(Cookie cookie: cookies){
 		if(cookie.getName().equals("codigo")){

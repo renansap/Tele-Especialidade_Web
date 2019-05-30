@@ -51,9 +51,18 @@ public class Pedido {
     String peso;
     String altura;
     String ds_nome;
+    String anexo;
     
     
     
+
+	public String getAnexo() {
+		return anexo;
+	}
+
+	public void setAnexo(String anexo) {
+		this.anexo = anexo;
+	}
 
 	public String getCd_hr_data() {
 		return cd_hr_data;
@@ -248,5 +257,18 @@ public class Pedido {
 			e.printStackTrace();
 		}
     	return null;
+    }
+    
+    public boolean UpdateImagemPedido(Pedido p) {
+    	PedidoCRUD pc = new PedidoCRUD();
+    	
+    	try {
+			return pc.UpdateImagemPedido(p);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+    	
     }
 }

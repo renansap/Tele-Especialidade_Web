@@ -219,5 +219,35 @@ public class PedidoCRUD {
 		return cod;
 
 	}
+	
+	public boolean UpdateImagemPedido(Pedido p) throws SQLException {
+		
+		/* Define a SQL */
+		StringBuilder sql = new StringBuilder();
+		sql.append("update PEDIDO set ");
+	
+		/* Abre a conexão que criamos o retorno é armazenado na variavel conn */
+		Connection conn = Conexao.getConexaoMySQL();
+
+		sql.append(" CD_anexo = \'");
+		sql.append(p.getAnexo());
+		sql.append("\' where CD_PEDIDO = \'");
+		sql.append(p.getCd_pedido());
+		sql.append("\'");
+
+		/* Mapeamento objeto relacional */
+		Statement st = conn.createStatement();
+		// comando.setString(1, "%" + u.getCd_usuario()+ "%");
+
+		System.out.println(sql.toString());
+
+		st.executeUpdate(sql.toString());
+
+		st.close();
+		conn.close();
+		
+		return true;
+		
+	}
 
 }

@@ -89,21 +89,23 @@ public class UploadDownloadFileServlet extends HttpServlet {
 				System.out.println("ContentType="+fileItem.getContentType());
 				System.out.println("Size in bytes="+fileItem.getSize());
 				
+				String extensao = fileItem.getName().substring(fileItem.getName().lastIndexOf("."), fileItem.getName().length());
 				
-				File file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileItem.getName());
+				
+				File file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+cod+extensao);
 				
 				System.out.println("Absolute Path at server="+file.getAbsolutePath());
 			
 				fileItem.write(file);
+				
+				response.sendRedirect("solicitacao_diagnostico.jsp?cadastro=1");
 				out.write("File "+fileItem.getName()+ " uploaded successfully.");
 				out.write("<br>");
 				out.write("<a href=\"UploadDownloadFileServlet?fileName="+fileItem.getName()+"\">Download "+fileItem.getName()+"</a>");
 			
-				String extensao = null;
-				extensao = fileItem.getName().substring(fileItem.getName().lastIndexOf("."), fileItem.getName().length());
-				System.out.println("extensao: " + extensao);
-				new File(fileItem.getName()).renameTo(new File(cod + extensao));
-				
+				pe.setCd_pedido(cod);
+				pe.setAnexo(cod+extensao);
+				pe.UpdateImagemPedido(pe);
 				
 			}
 		} catch (FileUploadException e) {
