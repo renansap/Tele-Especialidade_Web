@@ -65,13 +65,8 @@
 								<div class="card-body-icon">
 									<i class="fas fa-fw fa-shopping-cart"></i>
 								</div>
-								<div class="mr-5">1 Nova Solicitação!</div>
+								<div class="mr-5"><%out.print(p.solicitacoesPendentes()); %> Solicitações!</div>
 							</div>
-							<a class="card-footer text-white clearfix small z-1" href="#">
-								<span class="float-left">Ver Detalhes</span> <span
-								class="float-right"> <i class="fas fa-angle-right"></i>
-							</span>
-							</a>
 						</div>
 					</div>
 				</div>
@@ -104,7 +99,6 @@
 								<tbody>
 									<%
 										for (int i=0;i<lista.size(); i++) {
-											System.out.println("print: " + lista.get(i).getCd_pedido() + " i " + i);
 											if(lista.get(i).getCd_status().equals("PENDENTE")){
 												out.write("<tr class=\"table-success\">");
 												out.write("<td> " + lista.get(i).getCd_diagnostico() + " </td>");
@@ -121,7 +115,7 @@
 												out.write("<td> " + lista.get(i).getDs_especialidade() + "</td>");
 												out.write("<td> " + lista.get(i).getCd_data_hr() + "-" + lista.get(i).getCd_hr_data() + "</td>");
 												out.write("<td>" + lista.get(i).getCd_status() + " </td>");
-												out.write("<td><a href=\"solicitacao_diagnostico.jsp?cod=" + lista.get(i).getCd_pedido() + "\"class=\"btn btn-info\">Alterar</a></td>");
+												out.write("<td><a href=\"realizacao_diagnostico.jsp?cod=" + lista.get(i).getCd_pedido() + "\"class=\"btn btn-default\">Acessar</a></td>");
 												
 											}
 											out.write("</tr>");

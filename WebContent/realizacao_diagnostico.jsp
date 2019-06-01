@@ -62,94 +62,24 @@
 
 </head>
 <%
-	Cookie[] cookies = request.getCookies();
+	String cod = request.getParameter("cod");
+	System.out.println("codigo: " + cod);
 
-	String codigoUsuario = "";
-
-	for (Cookie cookie : cookies) {
-		if (cookie.getName().equals("codigo")) {
-			codigoUsuario = cookie.getValue();
-		}
-	}
-
-	String paciente = request.getParameter("paciente");
-	String diagnostico = request.getParameter("diagnostico");
-	String especialidade = request.getParameter("especialidade");
-	String anexo = request.getParameter("anexo");
-	String descricao = request.getParameter("descricao");
-	Pedido p = new Pedido();
 	Pedido pe = new Pedido();
-	Diagnostico d = new Diagnostico();
-
-	if (paciente != null && diagnostico != null) {
-		String array[] = new String[3];
-		array = paciente.split(" - ");
-		paciente = array[0];
-		array = diagnostico.split(" - ");
-		diagnostico = array[0];
-		array = especialidade.split(" - ");
-		especialidade = array[0];
-
-		p.setCd_diagnostico(diagnostico);
-		p.setCd_especialidade(especialidade);
-		p.setCd_paciente(paciente);
-		p.setDs_diagnostico(descricao);
-		p.setCd_usuario(codigoUsuario);
-		p.setCd_status("PENDENTE");
-
-	}
-
-	String cod = " ";
-	cod = request.getParameter("cod");
-	if (cod != " " && cod != null) {
-		p.setCd_pedido(cod);
-	}
-
-	System.out.println("Diagnostico: " + diagnostico + " especialidade: " + especialidade + " codigo: " + cod);
-	if (diagnostico != null && especialidade != null) {
-		if (cod != null) {
-			if (pe.UpdatePedido(p)) {
-				out.write("<script>alert(\"Solicitação atualizada com sucesso!\");</script>");
-			} else {
-				out.write("<script>alert(\"Erro ao atualizar solicitação!\");</script>");
-			}
+	pe.setCd_pedido(cod);
+	pe = pe.buscarPedido(pe);
+	
+	String resposta = request.getParameter("resposta");
+	pe.setDs_resposta(resposta);
+	
+	if(resposta !=null && cod!=null && pe.getCd_status().equals("PENDENTE")){
+		if (pe.respondePedido(pe)) {
+			System.out.println("resposta: " + pe.getDs_resposta());
+			out.write("<script>alert(\"Resposta enviada com sucesso!\");</script>");
 		} else {
-			if (pe.InsertPedido(p)) {
-				out.write("<script>alert(\"Solicitação cadastrada com sucesso!\");</script>");
-				response.sendRedirect("upload.jsp?cod=" + pe.getCodUltimoPedido());
-
-			} else {
-				out.write("<script>alert(\"Erro ao cadastrar solicitação!\");</script>");
-			}
+			out.write("<script>alert(\"Erro ao enviar resposta!\");</script>");
 		}
 	}
-
-	List<Pedido> lista = new ArrayList<Pedido>();
-
-	if (cod == null) {
-		p.setCd_data_hr("");
-		p.setCd_paciente("");
-		p.setCd_status("");
-		p.setCd_usuario("");
-		p.setDs_observacao("");
-	} else {
-		lista = p.BuscaPedido();
-		for (int i = 0; i < lista.size(); i++) {
-			if (String.valueOf(lista.get(i).getCd_pedido()).equals(cod)) {
-				p = lista.get(i);
-			}
-		}
-	}
-
-	EspecialidadeCRUD ec = new EspecialidadeCRUD();
-
-	List<Especialidade> listaEspecialidades = new ArrayList<Especialidade>();
-
-	listaEspecialidades = ec.buscar();
-
-	Paciente pac = new Paciente();
-	List<Paciente> listaPacientes = new ArrayList<Paciente>();
-	listaPacientes = pac.BuscaPaciente();
 %>
 
 <body id="page-top">
@@ -173,78 +103,132 @@
 					<div class="row jumbotron">
 
 						<div class="col">
-							<h2 class="text-center">Realização de Diagnóstico</h2>
-							<div class="container jumbotron">
-								<div class="col-sm-2"><h5>Nome:</h3></div>
-								<div class="col-sm-8">nomenome</div>
-							</div>
-								
+							
+
+							<form
+								action="realizacao_diagnostico.jsp<%if (cod != null) {
+				out.print("?cod=" + cod);
+			}%>"
+								method="post">
+								<div class="container">
+									<h2 class="text-center">Realização de Diagnóstico</h2>
+									
+									<div class="container">
+										<div class="row">
+											<div class="col-md-4">
+												<address>
+													<strong>Nome: <%out.print(pe.getNm_paciente()); %></strong>
+													<br> Data de Nascimento: <%out.print(pe.getDt_nascimento()); %>
+													<br> Sexo: <%
+																	if(pe.getSexo().equals("M")){
+																		out.println("Masculino");
+																	}else{
+																		out.print("Feminino");
+																	}
+																	%>
+													<br> Peso: <%out.println(pe.getPeso()); %> Kg
+													<br> Altura: <%out.print(pe.getAltura()); %>  m
+													
+												</address>
+
+												<address>
+													<strong>Diagnóstico: </strong> <%out.print(pe.getDs_diagnostico()); %>  
+												</address>
+												
+																								<address>
+													<strong>Solicitação: </strong> <%out.print(pe.getDs_observacao()); %>  
+												</address>
+												<address>
+													<strong>Status: </strong> <%out.print(pe.getCd_status()); %>  
+												</address>
+												<address>
+													<strong>Anexo: </strong> <%out.write("<a href=\"UploadDownloadFileServlet?fileName="+pe.getAnexo()+"\">Download"+"</a>");%>
+												</address>
+											</div>
+										</div>
+									</div>
+									
+									<div class="col">
+										<div class="form-group">
+											<label for="exampleFormControlTextarea1">Resposta da
+												solicitação</label>
+											<textarea class="form-control" name="resposta"
+												id="exampleFormControlTextarea1" rows="18" required <%if(pe.getCd_status().equals("ATENDIDO")){out.print("disabled");} %>><%if(pe.getCd_status().equals("ATENDIDO")){out.print(pe.getDs_resposta());} %></textarea>
+										</div>
+
+										<div class="form-group">
+											<button type="submit" class="btn btn-success btn-block">Responder</button>
+										</div>
+									</div>
+								</div>
 						</div>
 					</div>
-					<!-- /.container-fluid -->
-
-					<!-- Sticky Footer -->
-					<footer class="sticky-footer">
-						<div class="container my-auto">
-							<div class="copyright text-center my-auto">
-								<span>Copyright © Sistema Tele 2019</span>
-							</div>
-						</div>
-					</footer>
-
+					</form>
 				</div>
-				<!-- /.content-wrapper -->
-
 			</div>
-			<!-- /#wrapper -->
+			<!-- /.container-fluid -->
 
-			<!-- Scroll to Top Button-->
-			<a class="scroll-to-top rounded" href="#page-top"> <i
-				class="fas fa-angle-up"></i>
-			</a>
-
-			<!-- Logout Modal-->
-			<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
-				aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Ready to
-								Leave?</h5>
-							<button class="close" type="button" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-						</div>
-						<div class="modal-body">Select "Logout" below if you are
-							ready to end your current session.</div>
-						<div class="modal-footer">
-							<button class="btn btn-secondary" type="button"
-								data-dismiss="modal">Cancel</button>
-							<a class="btn btn-primary" href="login.html">Logout</a>
-						</div>
+			<!-- Sticky Footer -->
+			<footer class="sticky-footer">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>Copyright © Sistema Tele 2019</span>
 					</div>
 				</div>
+			</footer>
+
+		</div>
+		<!-- /.content-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+
+	<!-- Logout Modal-->
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Select "Logout" below if you are ready
+					to end your current session.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="login.html">Logout</a>
+				</div>
 			</div>
+		</div>
+	</div>
 
-			<!-- Bootstrap core JavaScript-->
-			<script src="vendor/jquery/jquery.min.js"></script>
-			<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-			<!-- Core plugin JavaScript-->
-			<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-			<!-- Page level plugin JavaScript-->
-			<script src="vendor/chart.js/Chart.min.js"></script>
-			<script src="vendor/datatables/jquery.dataTables.js"></script>
-			<script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+	<!-- Page level plugin JavaScript-->
+	<script src="vendor/chart.js/Chart.min.js"></script>
+	<script src="vendor/datatables/jquery.dataTables.js"></script>
+	<script src="vendor/datatables/dataTables.bootstrap4.js"></script>
 
-			<!-- Custom scripts for all pages-->
-			<script src="js/sb-admin.min.js"></script>
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin.min.js"></script>
 
-			<!-- Demo scripts for this page-->
-			<script src="js/demo/datatables-demo.js"></script>
-			<script src="js/demo/chart-area-demo.js"></script>
+	<!-- Demo scripts for this page-->
+	<script src="js/demo/datatables-demo.js"></script>
+	<script src="js/demo/chart-area-demo.js"></script>
 </body>
 
 </html>

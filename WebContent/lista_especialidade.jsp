@@ -3,6 +3,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="CRUD.EspecialidadeCRUD"%>
 <%@page import="Aplicacao.Especialidade"%>
+<%@page import="Aplicacao.Conselho"%>
 <%@ include file="menu.jsp"%>
 
 
@@ -97,19 +98,27 @@
 										<th>ID</th>
 										<th>Especialidade</th>
 										<th>Conselho</th>
-										<th>Ativo</th>
+										<th>Status</th>
 										<th>Açao</th>
 									</tr>
 								</thead>
 								<tbody>
 											<%
-					//Comentado para testar sem classe java
+					Conselho c = new Conselho();
 					for (int i = 0; i < lista.size(); i++) {
+						String con = c.buscaConselho(Integer.toString(lista.get(i).getCd_conselho())).getDs_conselho();
+						
 						out.write("<tr>");
 						out.write("<td> " + lista.get(i).getCd_especialidade() + " </td>");
 						out.write("<td> " + lista.get(i).getDs_especialidade() + " </td>");
-						out.write("<td> " + lista.get(i).getCd_conselho() + " </td>");
-						out.write("<td>" + lista.get(i).getSn_ativo() + " </td>");
+						out.write("<td> " + con + " </td>");
+						out.write("<td>"); 
+						if(lista.get(i).getSn_ativo().equals("S")){
+							out.write("Ativo");
+						}else{
+							out.write("Inativo");
+						}
+						out.write("</td>");
 						out.write("<td><a href=\"CadastroEspecialidade.jsp?cod=" + lista.get(i).getCd_especialidade() + "\"class=\"btn btn-default\">Alterar</a></td>");
 					}
 				%>

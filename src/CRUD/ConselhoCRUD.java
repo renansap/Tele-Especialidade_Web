@@ -160,5 +160,50 @@ public class ConselhoCRUD {
 		
 		return true;
 	}
+	
+	public Conselho buscaConselho(String codConselho) throws Exception {
+		/* Define a SQL */
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT * ");
+		sql.append("FROM CONSELHO where cd_conselho = \'");
+		sql.append(codConselho);
+		sql.append("\';");
+
+		/* Abre a conexão que criamos o retorno é armazenado na variavel conn */
+		Connection conn = Conexao.getConexaoMySQL();
+
+		/* Mapeamento objeto relacional */
+		PreparedStatement comando = conn.prepareStatement(sql.toString());
+		// comando.setString(1, "%" + u.getCd_usuario()+ "%");
+
+		System.out.println(comando);
+
+		/* Executa a SQL e captura o resultado da consulta */
+		ResultSet resultado = comando.executeQuery();
+
+		/* Cria uma lista para armazenar o resultado da consulta */
+		
+		Conselho linha = new Conselho();
+		while (resultado.next()) {
+			/* Cria um objeto para armazenar uma linha da consulta */
+			
+			// .setDs_nome(resultado.getString("ds_nome")); //ID Especialidade Conselho
+			// Ativo
+			linha.setCd_conselho(resultado.getInt("CD_CONSELHO"));
+			linha.setDs_conselho(resultado.getString("DS_CONSELHO"));
+			linha.setDs_sigla_conselho(resultado.getString("DS_SIGLA_CONSELHO"));
+			// linha.setSn_ativo(resultado.getString("SN_ATIVO"));
+			/* Armazena a linha lida em uma lista */
+			
+		}
+
+		/* Fecha a conexão */
+		resultado.close();
+		comando.close();
+		conn.close();
+
+		/* Retorna a lista contendo o resultado da consulta */
+		return linha;
+	}
 
 }

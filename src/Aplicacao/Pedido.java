@@ -271,4 +271,41 @@ public class Pedido {
 		}
     	
     }
+    
+    public Pedido buscarPedido(Pedido p) {
+    	PedidoCRUD pc = new PedidoCRUD();
+    	
+    	try {
+			return pc.buscarPedido(p);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    	
+    }
+    
+    public boolean respondePedido(Pedido p) {
+    	PedidoCRUD pc = new PedidoCRUD();
+    	try {
+    		return pc.respondePedido(p);
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    		return false;
+    	}
+    }
+    
+    public int solicitacoesPendentes() {
+    	PedidoCRUD pc = new PedidoCRUD();
+    	try {
+    		return pc.solicitacoesPendentes();
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    		return 0;
+    	}
+    }
 }

@@ -86,4 +86,9 @@ public class Conselho {
         }
     }
     
+    public Conselho buscaConselho(String cod) throws Exception{
+		ConselhoCRUD cc = new ConselhoCRUD();
+		return cc.buscaConselho(cod);
+	}
+
 }
