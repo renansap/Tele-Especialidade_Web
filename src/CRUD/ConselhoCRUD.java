@@ -51,7 +51,7 @@ public class ConselhoCRUD {
 			Conselho linha = new Conselho();
 			// .setDs_nome(resultado.getString("ds_nome")); //ID Especialidade Conselho
 			// Ativo
-			linha.setCd_conselho(resultado.getInt("CD_CONSELHO"));
+			linha.setCd_conselho(resultado.getString("CD_CONSELHO"));
 			linha.setDs_conselho(resultado.getString("DS_CONSELHO"));
 			linha.setDs_sigla_conselho(resultado.getString("DS_SIGLA_CONSELHO"));
 			// linha.setSn_ativo(resultado.getString("SN_ATIVO"));
@@ -142,7 +142,9 @@ public class ConselhoCRUD {
 		
 		sql.append(" ds_conselho = \'");
 		sql.append(c.getDs_conselho());
-		sql.append("\' where cd_especialidade = \'");
+		sql.append("', ds_sigla_conselho = \'");
+		sql.append(c.getDs_sigla_conselho());
+		sql.append("\' where cd_conselho= \'");
 		sql.append(c.getCd_conselho());
 		sql.append("\'");
 
@@ -189,7 +191,7 @@ public class ConselhoCRUD {
 			
 			// .setDs_nome(resultado.getString("ds_nome")); //ID Especialidade Conselho
 			// Ativo
-			linha.setCd_conselho(resultado.getInt("CD_CONSELHO"));
+			linha.setCd_conselho(resultado.getString("CD_CONSELHO"));
 			linha.setDs_conselho(resultado.getString("DS_CONSELHO"));
 			linha.setDs_sigla_conselho(resultado.getString("DS_SIGLA_CONSELHO"));
 			// linha.setSn_ativo(resultado.getString("SN_ATIVO"));

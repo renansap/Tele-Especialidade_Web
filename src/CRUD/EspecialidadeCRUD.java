@@ -144,6 +144,8 @@ public class EspecialidadeCRUD {
 		
 		sql.append(" ds_especialidade = \'");
 		sql.append(e.getDs_especialidade());
+		sql.append("', cd_conselho = \'");
+		sql.append(e.getCd_conselho());
 		sql.append("\' where cd_especialidade = \'");
 		sql.append(e.getCd_especialidade());
 		sql.append("\'");

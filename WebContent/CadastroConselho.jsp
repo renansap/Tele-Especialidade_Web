@@ -10,67 +10,72 @@
 
 <%
 
-Conselho c = new Conselho();
-String ds_conselho = request.getParameter("ds_conselho");
-String ds_sigla_conselho = request.getParameter("ds_sigla_conselho");
+String cad = request.getParameter("cad");
+String up = request.getParameter("up");
+String del = request.getParameter("del");
+String cod = request.getParameter("cod");
 
+System.out.println("cad=" + cad);
+Conselho con = new Conselho();
 
-String cod = " ";
-cod = request.getParameter("cod");
-if(cod!=" "&&cod!=null){
-	System.out.println("Cod:" + cod + "teste");
-	c.setCd_conselho(Integer.parseInt(cod));
+if (cad != null && cad.equals("1")) {
+	System.out.println("cadastro");
+	String ds_conselho = request.getParameter("ds_conselho");
+	String cd_conselho = request.getParameter("cd_conselho");
+	String ds_sigla_conselho = request.getParameter("ds_sigla_conselho");
+
+	con.setDs_conselho(ds_conselho);
+	con.setDs_sigla_conselho(ds_sigla_conselho);
+
+	if (con.InsertConselho(con)) {
+		out.print("<script>alert(\"Conselho cadastrado com sucesso!\");</script>");
+	} else {
+		out.print("<script>alert(\"Erro ao cadastrar conselho.\");</script>");
+	}
+
 }
-String del = " ";
-del = request.getParameter("del");
+if (up != null && up.equals("1") && cod != null) {
+	System.out.println("Upload");
+	String ds_conselho = request.getParameter("ds_conselho");
+	String cd_conselho = request.getParameter("cd_conselho");
+	String ds_sigla_conselho = request.getParameter("ds_sigla_conselho");
 
-if(ds_conselho!=null && ds_sigla_conselho != null){
-	//String SN_ATIVO = "S";
+	con.setCd_conselho(cod);
+	con.setDs_conselho(ds_conselho);
+	con.setDs_sigla_conselho(ds_sigla_conselho);
 
-	if(cod==" "||cod==null){
-		if (c.InsertConselho(c)) {
-			out.write("<script>alert(\"Conselho cadastrado com sucesso!\");</script>");
-		} else {
-			out.write("<script>alert(\"Erro ao cadastrar Conselho!\");</script>");
+	if (con.UpdateConselho(con)) {
+		out.print("<script>alert(\"Conselho atualizado com sucesso!\");</script>");
+	} else {
+		out.print("<script>alert(\"Erro ao atualizar conselho.\");</script>");
+	}
+
+}
+if (del != null && del.equals("1") && cod != null) {
+	System.out.println("Delete");
+
+	con.setCd_conselho(cod);
+
+	if (con.DeleteConselho(con)) {
+		out.print("<script>alert(\"Conselho deletado com sucesso!\");</script>");
+	} else {
+		out.print("<script>alert(\"Erro ao deletar conselho.\");</script>");
+	}
+}
+
+if (cod != null) {
+	List<Conselho> list = new ArrayList();
+	list = con.busca();
+
+	for (int i = 0; i < list.size(); i++) {
+		if (list.get(i).getCd_conselho().equals(cod)) {
+			con.setCd_conselho(list.get(i).getCd_conselho());
+			con.setDs_conselho(list.get(i).getDs_conselho());
+			con.setDs_sigla_conselho(list.get(i).getDs_sigla_conselho());
 		}
 	}
+
 }
-if(del!=null&&del!=" "&&del.equals("1")){
-	c.setCd_conselho(Integer.parseInt(cod));
-	if(c.DeleteConselho(c)){
-		out.write("<script>alert(\"Conselho deletado com sucesso!\");</script>");
-	}else{
-		out.write("<script>alert(\"Erro ao deletar Conselho!\");</script>");
-	}
-}
-
-if(cod!=" "&&cod!=null&&del!="1"&&del==" "){
-	if(c.UpdateConselho(c)){
-		out.write("<script>alert(\"Conselho atualizado com sucesso!\");</script>");
-	}else{
-		out.write("<script>alert(\"Erro ao atualizado Conselho!\");</script>");
-	}
-}
-
-
-ConselhoCRUD cc = new ConselhoCRUD();
-List<Conselho> lista = new ArrayList<Conselho>();
-Conselho user = new Conselho();
-
-if(cod==null){	
-	user.setDs_conselho(" ");
-	user.setDs_sigla_conselho(" ");
-
-}else{
-	lista= cc.buscar();
-	for(int i=0;i<lista.size();i++){
-		if(String.valueOf(lista.get(i).getCd_conselho()).equals(cod)){
-			user = lista.get(i);
-		}
-	}
-}
-
-
 %>
 
 <!DOCTYPE html>
@@ -105,7 +110,7 @@ if(cod==null){
         </ol>
 						<div class="col">
 							<div class="con-form">
-								<form action="CadastroConselho.jsp" method="rest">
+								<form action="CadastroConselho.jsp?<%if(cod!=null){out.print("up=1&cod="+cod);}else{out.print("cad=1");}%>" method="POST">
 									<h2 class="text-center">Cadastro de Conselho</h2>
 									<div class="form-group">
 										<input type="text" name="ds_conselho" class="form-control"
@@ -113,8 +118,7 @@ if(cod==null){
 											
 											<%
 											if(cod!=null){
-												out.write("value=\"" + user.getDs_conselho()+ "\"");
-												//System.out.println("Cod:"+user.getDs_conselho() + cod + "testedentro form");
+												out.write("value=\"" + con.getDs_conselho()+ "\"");
 											}else{
 												out.write("placeholder=\"Descrição Conselho\"");
 											}
@@ -126,7 +130,7 @@ if(cod==null){
 											
 											<%
 											if(cod!=null){
-												out.write("value=\"" + user.getDs_sigla_conselho()+ "\"");
+												out.write("value=\"" + con.getDs_sigla_conselho()+ "\"");
 											}else{
 												out.write("placeholder=\"Sigla do Conselho\"");
 											}

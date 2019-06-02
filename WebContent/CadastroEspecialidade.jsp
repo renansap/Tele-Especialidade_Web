@@ -4,6 +4,7 @@
     Author     : 0154761
 --%>
 <%@page import="Aplicacao.Especialidade"%>
+<%@page import="Aplicacao.Conselho"%>
 <%@page import="CRUD.EspecialidadeCRUD"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Date"%>
@@ -12,82 +13,74 @@
 
 
 <%
-	//System.out.println("Entrou ak Começo");
+	String cad = request.getParameter("cad");
+	String up = request.getParameter("up");
+	String del = request.getParameter("del");
+	String cod = request.getParameter("cod");
 
-	Especialidade e = new Especialidade();
-	String ds_especialidade = request.getParameter("ds_especialidade");
-	
-	String cod = " ";
-	cod = request.getParameter("cod");
-	
-	String del = " ";
-	del = request.getParameter("del");
-	
-	String up = " ";
-	up = request.getParameter("up");
+	System.out.println("cad=" + cad);
+	Especialidade esp = new Especialidade();
 
-	if(ds_especialidade!=null){		
-	String CD_CONSELHO = request.getParameter("cd_conselho");
-	CD_CONSELHO = "2";
-	String SN_ATIVO = "S";
-	
-	e.setDs_especialidade(ds_especialidade);
-	e.setCd_conselho(Integer.parseInt(CD_CONSELHO));
-	e.setSn_ativo(SN_ATIVO);	
+	if (cad != null && cad.equals("1")) {
+		System.out.println("cadastro");
+		String ds_especialidade = request.getParameter("ds_especialidade");
+		String cd_conselho = request.getParameter("cd_conselho");
 
-	System.out.println("ds_especialidade: " + ds_especialidade);
-	System.out.println("Cd_conselho: " + CD_CONSELHO);
-	System.out.println("sn_ativo: " + SN_ATIVO);
-	
-	System.out.println("Cod: antes do if"+cod);
-	System.out.println("del : antes do if"+del);
-	System.out.println("up : antes do if "+up);
-	
+		esp.setCd_conselho(Integer.parseInt(cd_conselho));
+		esp.setDs_especialidade(ds_especialidade);
+		esp.setSn_ativo("Ativo");
 
-	if(cod==" "||cod==null && up.equals("0")){
-	if (e.InsertEspecialidade(e)) {
-		out.write("<script>alert(\"Especialidade cadastrada com sucesso!\");</script>");
-	} else {
-		out.write("<script>alert(\"Erro ao cadastrar Especialidade!\");</script>");
-
-	}
-	}
-	}
-	if(del!=null&&del!=" "&&del.equals("1")){
-		e.setCd_especialidade(cod);
-		if(e.DeleteEspecialidade(e)){
-			out.write("<script>alert(\"Usuário deletado com sucesso!\");</script>");
-		}else{
-			out.write("<script>alert(\"Erro ao deletar usuário !\");</script>");
+		if (esp.InsertEspecialidade(esp)) {
+			out.print("<script>alert(\"Especialidade cadastrada com sucesso!\");</script>");
+		} else {
+			out.print("<script>alert(\"Erro ao cadastrar especialidade.\");</script>");
 		}
+
 	}
-	System.out.println(up+"UPANTES");
-	System.out.println(cod+"CODANTES");
-	if(cod!=null &&up.equals("1")){
-		if(e.UpdateEspecialidade(e)){
-			out.write("<script>alert(\"Usuário atualizado com sucesso!\");</script>");
-		}else{
-			out.write("<script>alert(\"Erro ao atualizado usuário!\");</script>");
+	if (up != null && up.equals("1") && cod != null) {
+		System.out.println("Upload");
+		String ds_especialidade = request.getParameter("ds_especialidade");
+		String cd_conselho = request.getParameter("cd_conselho");
+
+		esp.setCd_conselho(Integer.parseInt(cd_conselho));
+		esp.setDs_especialidade(ds_especialidade);
+		esp.setCd_especialidade(cod);
+		esp.setSn_ativo("Ativo");
+		
+		
+
+		if (esp.UpdateEspecialidade(esp)) {
+			out.print("<script>alert(\"Especialidade atualizada com sucesso!\");</script>");
+		} else {
+			out.print("<script>alert(\"Erro ao atualizar especialidade.\");</script>");
+		}
+
+	}
+	if (del != null && del.equals("1") && cod != null) {
+		System.out.println("Delete");
+
+		esp.setCd_especialidade(cod);
+
+		if (esp.DeleteEspecialidade(esp)) {
+			out.print("<script>alert(\"Especialidade deletada com sucesso!\");</script>");
+		} else {
+			out.print("<script>alert(\"Erro ao deletar especialidade.\");</script>");
 		}
 	}
 
-	
-	EspecialidadeCRUD ec = new EspecialidadeCRUD();
-    List<Especialidade> lista = new ArrayList<Especialidade>();
-    Especialidade esp = new Especialidade();
-    
-    
-	if(cod==null){
-		esp.setDs_especialidade(" ");
-		esp.setCd_conselho(0);
-		esp.setSn_ativo(" ");
-	}else{
-		lista= ec.buscar();
-		for(int i=0;i<lista.size();i++){
-			if(String.valueOf(lista.get(i).getCd_especialidade()).equals(cod)){
-				esp = lista.get(i);
+	if (cod != null) {
+		List<Especialidade> list = new ArrayList();
+		list = esp.BuscaEspecialidades();
+
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getCd_especialidade().equals(cod)) {
+				esp.setCd_conselho(list.get(i).getCd_conselho());
+				esp.setCd_especialidade(cod);
+				esp.setDs_especialidade(list.get(i).getDs_especialidade());
+				esp.setSn_ativo(list.get(i).getSn_ativo());
 			}
 		}
+
 	}
 %>
 
@@ -119,8 +112,8 @@
 
 				<!-- Breadcrumbs-->
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="CadastroEspecialidade.jsp">
-						Cadastro de	Especialidade</a></li>
+					<li class="breadcrumb-item"><a
+						href="CadastroEspecialidade.jsp"> Cadastro de Especialidade</a></li>
 					<li class="breadcrumb-item active">Cadastrar</li>
 				</ol>
 
@@ -133,46 +126,76 @@
 						</div>
 						<div class="col">
 							<div class="esp-form">
-								<form action="CadastroEspecialidade.jsp<%if(cod!=null){out.print("?up=1&cod=" + cod + "");}%>" method="Post">
+								<form
+									action="CadastroEspecialidade.jsp<%if (cod != null) {
+				out.print("?up=1&cod=" + cod + "");
+			} else {
+				out.print("?cad=1");
+			}%>"
+									method="Post">
 									<h2 class="text-center">Cadastro de Especialidade</h2>
 									<div class="form-group">
-										<input type="text" name="ds_especialidade" class="form-control"
-											placeholder="Descrição Especialidade" required="required"
-											
-											<%
-											if(cod!=null){
-												out.write("value=\"" + esp.getDs_especialidade()+ "\"");
-											}else{
-												out.write("placeholder=\"Descriçao especialidade\"");
-											}
-											%>">
+										<input type="text" name="ds_especialidade"
+											class="form-control" placeholder="Descrição Especialidade"
+											required="required"<%if (cod != null) {
+				out.write("value=\"" + esp.getDs_especialidade() + "\"");
+			} else {
+				out.write("placeholder=\"Descriçao especialidade\"");
+			}%>">
 									</div>
 									<div class="form-group">
 										<select class="form-control" placeholder="Conselho"
-											required="required" name="Conselho">
+											required="required" name="cd_conselho">
+											<%
+												if (cod == null) {
+													Conselho c = new Conselho();
+													List<Conselho> list = new ArrayList();
+													list = c.busca();
+													for (int i = 0; i < list.size(); i++) {
+														out.print("<option value=" + list.get(i).getCd_conselho() + ">" + list.get(i).getDs_conselho()
+																+ "</option>");
+													}
+												} else {
+													Conselho c = new Conselho();
+													List<Conselho> list = new ArrayList();
+													list = c.busca();
+													for (int i = 0; i < list.size(); i++) {
+														if (list.get(i).getCd_conselho() == esp.getCd_conselho()) {
+															out.print("<option selected value=" + list.get(i).getCd_conselho() + ">"
+																	+ list.get(i).getDs_conselho() + "</option>");
+														} else {
+															out.print("<option value=" + list.get(i).getCd_conselho() + ">" + list.get(i).getDs_conselho()
+																	+ "</option>");
+														}
+													}
+												}
+											%>
 											<option value=2>CRM</option>
-<!-- 											<option value="CRF">1</option>
+											<!-- 											<option value="CRF">1</option>
 											<option value="CRN">1</option>
 											<option value="CFM">1</option> -->
 										</select>
 									</div>
 									<div class="form-group">
 										<button type="submit" class="btn btn-success btn-block">
-										<%
-											if(cod!=null){
-												out.print("Atualizar");
-											}else{
-												out.print("Cadastrar");
-											}
-										%></button>
+											<%
+												if (cod != null) {
+													out.print("Atualizar");
+												} else {
+													out.print("Cadastrar");
+												}
+											%>
+										</button>
 									</div>
 									<%
-										if(cod!=null){
+										if (cod != null) {
 											out.print("<div class=\"form-group\">");
-											out.write("<td><a href=\"CadastroEspecialidade.jsp?del=1&cod=" + cod + "\" class=\"btn btn-danger\">Deletar</a></td>");
-											
+											out.write("<td><a href=\"CadastroEspecialidade.jsp?del=1&cod=" + cod
+													+ "\" class=\"btn btn-danger\">Deletar</a></td>");
+
 										}
 									%>
+								
 							</div>
 						</div>
 					</div>

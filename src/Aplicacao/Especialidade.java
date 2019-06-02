@@ -68,6 +68,13 @@ public class Especialidade {
         }
     }
     
+    public List<Especialidade> BuscaEspecialidades() throws Exception{
+        
+        EspecialidadeCRUD es = new EspecialidadeCRUD();
+        
+        return es.buscar();
+    }
+    
     public boolean DeleteEspecialidade(Especialidade e) throws Exception{
     	EspecialidadeCRUD es = new EspecialidadeCRUD();
     	 

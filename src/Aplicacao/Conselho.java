@@ -18,18 +18,18 @@ import CRUD.UsuarioCRUD;
  * @author Martini
  */
 public class Conselho {
-    int cd_conselho;
+    String cd_conselho;
     String ds_conselho;
     String ds_sigla_conselho;
 
 
 
 
-	public int getCd_conselho() {
+	public String getCd_conselho() {
         return cd_conselho;
     }
 
-    public void setCd_conselho(int cd_conselho) {
+    public void setCd_conselho(String cd_conselho) {
         this.cd_conselho = cd_conselho;
     }
 

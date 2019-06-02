@@ -119,7 +119,7 @@
 							out.write("Inativo");
 						}
 						out.write("</td>");
-						out.write("<td><a href=\"CadastroEspecialidade.jsp?cod=" + lista.get(i).getCd_especialidade() + "\"class=\"btn btn-default\">Alterar</a></td>");
+						out.write("<td><a href=\"CadastroEspecialidade.jsp?cod=" + lista.get(i).getCd_especialidade() + "&cad=0" + "\"class=\"btn btn-default\">Alterar</a></td>");
 					}
 				%>
 
