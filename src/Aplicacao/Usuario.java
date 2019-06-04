@@ -27,7 +27,7 @@ public class Usuario {
     String ds_nome;
     String dt_nascimento;
     int idade;
-    int cd_especialidade;
+    String cd_especialidade;
     int nr_conselho;
     String email;
     String telefone;
@@ -68,11 +68,11 @@ public class Usuario {
         this.idade = idade;
     }
 
-    public int getCd_especialidade() {
+    public String getCd_especialidade() {
         return cd_especialidade;
     }
 
-    public void setCd_especialidade(int cd_especialidade) {
+    public void setCd_especialidade(String cd_especialidade) {
         this.cd_especialidade = cd_especialidade;
     }
 

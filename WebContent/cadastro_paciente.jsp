@@ -67,7 +67,8 @@
 		}else{
 			Paciente pc = new Paciente();
 			if (pc.InsertPaciente(p)) {
-				out.write("<script>alert(\"Paciente cadastrado com sucesso!\");</script>");				
+				out.write("<script>alert(\"Paciente cadastrado com sucesso!\");</script>");
+				
 			} else {
 				out.write("<script>alert(\"Erro ao cadastrar Paciente!\");</script>");
 			}

@@ -100,7 +100,7 @@ public class UsuarioCRUD {
 			linha.setDs_nome(resultado.getString("ds_nome"));
 			linha.setDt_nascimento(resultado.getString("dt_nascimento"));
 			linha.setIdade(resultado.getInt("idade"));
-			linha.setCd_especialidade(resultado.getInt("cd_especialidade"));
+			linha.setCd_especialidade(resultado.getString("cd_especialidade"));
 			linha.setNr_conselho(resultado.getInt("nr_conselho"));
 			linha.setEmail(resultado.getString("email"));
 			linha.setTelefone(resultado.getString("telefone"));

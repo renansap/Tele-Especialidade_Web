@@ -18,7 +18,7 @@ import CRUD.UsuarioCRUD;
 public class Especialidade {
     String cd_especialidade;
     String ds_especialidade;    
-    int cd_conselho;
+    String cd_conselho;
     String sn_ativo;
 
     public String getCd_especialidade() {
@@ -39,12 +39,12 @@ public class Especialidade {
     }
 
 
-    public int getCd_conselho() {
+    public String getCd_conselho() {
     	//cd_conselho = (Integer) null;
         return cd_conselho;
     }
 
-    public void setCd_conselho(int cd_conselho) {
+    public void setCd_conselho(String cd_conselho) {
         this.cd_conselho = cd_conselho;
     }
 

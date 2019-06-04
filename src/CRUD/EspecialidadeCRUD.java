@@ -54,7 +54,7 @@ public class EspecialidadeCRUD {
 			// Ativo
 			linha.setCd_especialidade(resultado.getString("CD_ESPECIALIDADE"));
 			linha.setDs_especialidade(resultado.getString("DS_ESPECIALIDADE"));
-			linha.setCd_conselho(resultado.getInt("CD_CONSELHO"));
+			linha.setCd_conselho(resultado.getString("CD_CONSELHO"));
 			linha.setSn_ativo(resultado.getString("SN_ATIVO"));
 			/* Armazena a linha lida em uma lista */
 			listaEspecialidade.add(linha);

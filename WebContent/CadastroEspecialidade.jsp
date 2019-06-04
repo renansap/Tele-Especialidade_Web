@@ -26,7 +26,7 @@
 		String ds_especialidade = request.getParameter("ds_especialidade");
 		String cd_conselho = request.getParameter("cd_conselho");
 
-		esp.setCd_conselho(Integer.parseInt(cd_conselho));
+		esp.setCd_conselho((cd_conselho));
 		esp.setDs_especialidade(ds_especialidade);
 		esp.setSn_ativo("Ativo");
 
@@ -42,7 +42,7 @@
 		String ds_especialidade = request.getParameter("ds_especialidade");
 		String cd_conselho = request.getParameter("cd_conselho");
 
-		esp.setCd_conselho(Integer.parseInt(cd_conselho));
+		esp.setCd_conselho((cd_conselho));
 		esp.setDs_especialidade(ds_especialidade);
 		esp.setCd_especialidade(cod);
 		esp.setSn_ativo("Ativo");

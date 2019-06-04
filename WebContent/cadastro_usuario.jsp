@@ -30,7 +30,7 @@
 
 	l.setDs_nome(request.getParameter("nome"));
 	l.setDt_nascimento(request.getParameter("dt_nascimento"));
-	l.setCd_especialidade(33); 
+	l.setCd_especialidade(request.getParameter("especialidade")); 
 	l.setEmail(request.getParameter("email"));
 	l.setTelefone(request.getParameter("telefone"));
 	l.setSexo(request.getParameter("sexo"));
@@ -199,7 +199,7 @@
 											<%
 												for(int i=0;i<listaEspecialidades.size();i++){
 													out.write("<option>");
-													out.write(listaEspecialidades.get(i).getDs_especialidade());
+													out.write(listaEspecialidades.get(i).getCd_conselho()+" - "+ listaEspecialidades.get(i).getDs_especialidade());
 													out.write("</option>");
 												}
 											%>
