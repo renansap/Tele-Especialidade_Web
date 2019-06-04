@@ -39,8 +39,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="solicitacao_diagnostico.jsp">Cadastrar</a>
-          <a class="dropdown-item" href="#">Listar</a>
-          <a class="dropdown-item" href="#">Algo mais aqui</a>
+          <a class="dropdown-item" href="lista_trabalho.jsp">Listar</a>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -50,7 +49,6 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="cadastro_usuario.jsp">Cadastrar</a>
           <a class="dropdown-item" href="lista_usuario.jsp">Listar</a>
-          <a class="dropdown-item" href="#">Algo mais aqui</a>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -60,7 +58,6 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="CadastroEspecialidade.jsp">Cadastrar</a>
           <a class="dropdown-item" href="lista_especialidade.jsp">Listar</a>
-          <a class="dropdown-item" href="#">Algo mais aqui</a>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -70,7 +67,6 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="CadastroConselho.jsp">Cadastrar</a>
           <a class="dropdown-item" href="lista_conselho.jsp">Listar</a>
-          <a class="dropdown-item" href="#">Algo mais aqui</a>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -80,7 +76,6 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="cadastro_paciente.jsp">Cadastrar</a>
           <a class="dropdown-item" href="lista_paciente.jsp">Listar</a>
-          <a class="dropdown-item" href="#">Algo mais aqui</a>
         </div>
       </li>
     </ul>

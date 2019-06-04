@@ -88,7 +88,6 @@
 									<tr>
 										<th>Código</th>
 										<th>Solicitante</th>
-										<th>Especialidade</th>
 										<th>Data/Hora</th>
 										<th>Status</th>
 										<th>Ação</th>
@@ -103,7 +102,7 @@
 												out.write("<tr class=\"table-success\">");
 												out.write("<td> " + lista.get(i).getCd_diagnostico() + " </td>");
 												out.write("<td> " + lista.get(i).getDs_nome() + "</td>");
-												out.write("<td> " + lista.get(i).getDs_especialidade() + "</td>");
+											//	out.write("<td> " + lista.get(i).getDs_especialidade() + "</td>");
 												out.write("<td> " + lista.get(i).getCd_data_hr() + "-" + lista.get(i).getCd_hr_data() + "</td>");
 												out.write("<td><b>" + lista.get(i).getCd_status() + " </b></td>");
 												out.write("<td><a href=\"solicitacao_diagnostico.jsp?cod=" + lista.get(i).getCd_pedido() + "\"class=\"btn btn-default\">Acessar</a></td>");
@@ -112,7 +111,7 @@
 												out.write("<tr>");
 												out.write("<td> " + lista.get(i).getCd_diagnostico() + " </td>");
 												out.write("<td> " + lista.get(i).getDs_nome() + "</td>");
-												out.write("<td> " + lista.get(i).getDs_especialidade() + "</td>");
+											//	out.write("<td> " + lista.get(i).getDs_especialidade() + "</td>");
 												out.write("<td> " + lista.get(i).getCd_data_hr() + "-" + lista.get(i).getCd_hr_data() + "</td>");
 												out.write("<td>" + lista.get(i).getCd_status() + " </td>");
 												out.write("<td><a href=\"realizacao_diagnostico.jsp?cod=" + lista.get(i).getCd_pedido() + "\"class=\"btn btn-default\">Acessar</a></td>");

@@ -175,10 +175,18 @@
             <div class="col">
                 <div class="login-form">
             <form action="solicitacao_diagnostico.jsp<%if(cod!=null){out.print("?cod="+cod);}%>" method="post">
-                <h2 class="text-center">Solicitação de Diagnóstico</h2>  
+                <h2 class="text-center">Solicitação de Diagnóstico</h2> 
+                                <div align="right">
+                    <td><a href="cadastro_paciente.jsp" btn btn-default\">Inserir Paciente</a></td>
+                </div>   
                 <div class="form-group">
+                	
                     <select class="form-control" id="exampleFormControlSelect1" name="paciente">
-                        <option disabled selected>Paciente</option>
+                   
+
+                    
+                        <option disabled selected>Paciente</option>                    
+
 						<%if(cod==null){
 								for(int i=0;i<listaPacientes.size();i++){
 									out.write("<option>");
@@ -203,7 +211,8 @@
 							}
 						%>
                     </select>
-                </div>     
+                </div>
+   
                 <div class="form-group">
                     <select class="form-control" id="exampleFormControlSelect1" name="diagnostico">
                         <option disabled selected>Diagnostico</option>

@@ -22,8 +22,8 @@ public class PedidoCRUD {
 	public List<Pedido> buscar() throws Exception {
 		/* Define a SQL */
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT P.CD_PEDIDO, P.CD_PACIENTE, P.CD_DIAGNOSTICO, P.DS_OBSERVACAO, P.CD_USUARIO, P.CD_DATA_HR, P.CD_STATUS, P.DS_RESPOSTA, D.CD_DIAGNOSTICO, D.DS_DIAGNOSTICO, D.CD_ESPECIALIDADE, D.VALOR, E.DS_ESPECIALIDADE, PA.CD_PACIENTE, PA.NM_PACIENTE, PA.DT_NASCIMENTO, PA.SEXO, PA.ALTURA, PA.PESO, U.DS_NOME\r\n");
-		sql.append("FROM PEDIDO P JOIN DIAGNOSTICO D ON D.CD_DIAGNOSTICO = P.CD_DIAGNOSTICO JOIN ESPECIALIDADE E ON E.CD_ESPECIALIDADE = D.CD_ESPECIALIDADE JOIN PACIENTE PA ON P.CD_PACIENTE = PA.CD_PACIENTE JOIN USUARIO U ON P.CD_USUARIO = U.CD_USUARIO ORDER BY CD_STATUS DESC, CD_data_hr DESC");
+		sql.append("SELECT P.CD_PEDIDO, P.CD_PACIENTE, P.CD_DIAGNOSTICO, P.DS_OBSERVACAO, P.CD_USUARIO, P.CD_DATA_HR, P.CD_STATUS, P.DS_RESPOSTA, D.CD_DIAGNOSTICO, D.DS_DIAGNOSTICO, D.CD_ESPECIALIDADE, D.VALOR, PA.CD_PACIENTE, PA.NM_PACIENTE, PA.DT_NASCIMENTO, PA.SEXO, PA.ALTURA, PA.PESO, U.DS_NOME\r\n");
+		sql.append("FROM PEDIDO P JOIN DIAGNOSTICO D ON D.CD_DIAGNOSTICO = P.CD_DIAGNOSTICO JOIN PACIENTE PA ON P.CD_PACIENTE = PA.CD_PACIENTE JOIN USUARIO U ON P.CD_USUARIO = U.CD_USUARIO ORDER BY CD_STATUS DESC, CD_data_hr DESC");
 		
 		/* Abre a conexão que criamos o retorno é armazenado na variavel conn */
 		Connection conn = Conexao.getConexaoMySQL();
@@ -56,7 +56,7 @@ public class PedidoCRUD {
 			linha.setDs_diagnostico(resultado.getString("DS_RESPOSTA"));
 			linha.setCd_especialidade(resultado.getString("CD_ESPECIALIDADE"));
 			linha.setValor(resultado.getFloat("VALOR"));
-			linha.setDs_especialidade(resultado.getString("DS_ESPECIALIDADE"));
+			//linha.setDs_especialidade(resultado.getString("DS_ESPECIALIDADE"));
 			linha.setNm_paciente(resultado.getString("NM_PACIENTE"));
 			linha.setDt_nascimento(resultado.getString("DT_NASCIMENTO"));
 			linha.setSexo(resultado.getString("SEXO"));
