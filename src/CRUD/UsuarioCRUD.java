@@ -11,7 +11,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,7 +33,7 @@ public class UsuarioCRUD {
 		sql.append(" ds_nome = \'");
 		sql.append(u.getDs_nome());
 		sql.append("\' and dt_nascimento = \'");
-		sql.append(u.getDt_nascimento());
+		sql.append(formatDate(u.getDt_nascimento()));
 		sql.append("\' and idade = \'");
 		sql.append(u.getIdade());
 		sql.append("\' and cd_especialidade = \'");
@@ -63,6 +66,21 @@ public class UsuarioCRUD {
 		
 		return true;
 	}
+	
+	
+	private String formatDate(String datanasc) {
+		String array[] = new String[3];
+		array = datanasc.split("/");
+		return array[2]+"/"+array[1]+"/"+array[0];
+	}
+	
+	private String formatDatefromDatabase(String datanasc) {
+		String array[] = new String[3];
+		array = datanasc.split("-");
+		return array[2]+"/"+array[1]+"/"+array[0];
+	}
+
+
 
 	
 	public List<Usuario> buscar() throws Exception {
@@ -98,7 +116,7 @@ public class UsuarioCRUD {
 			Usuario linha = new Usuario();
 			linha.setCd_usuario(resultado.getInt("cd_usuario"));
 			linha.setDs_nome(resultado.getString("ds_nome"));
-			linha.setDt_nascimento(resultado.getString("dt_nascimento"));
+			linha.setDt_nascimento(formatDatefromDatabase(resultado.getString("dt_nascimento")));
 			linha.setIdade(resultado.getInt("idade"));
 			linha.setCd_especialidade(resultado.getString("cd_especialidade"));
 			linha.setNr_conselho(resultado.getInt("nr_conselho"));
@@ -109,6 +127,8 @@ public class UsuarioCRUD {
 			/* Armazena a linha lida em uma lista */
 			lista.add(linha);
 		}
+		
+		System.out.println(lista.get(5).getDt_nascimento());
 
 		/* Fecha a conexão */
 		resultado.close();
@@ -133,7 +153,7 @@ public class UsuarioCRUD {
 		sql.append("\'");
 		sql.append(u.getDs_nome());
 		sql.append("\', \'");
-		sql.append(u.getDt_nascimento());
+		sql.append(formatDate(u.getDt_nascimento()));
 		sql.append("\', \'");
 		sql.append(u.getIdade());
 		sql.append("\', \'");

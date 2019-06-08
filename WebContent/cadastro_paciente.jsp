@@ -51,11 +51,11 @@
 		if(cod!=null){
 			if(del!=null&&del!=" "&&del.equals("1")){
 
-				//System.out.println("teste aqui");
+				
 				if(p.DeletePaciente(p)){
 					out.write("<script>alert(\"Paciente deletado com sucesso!\");</script>");
 				}else{
-					out.write("<script>alert(\"Erro ao deletar Paciente!\");</script>");
+					out.write("<script>alert(\"Erro ao deletar Paciente ou o paciente possui pedidos cadastrados!\");</script>");
 				}
 			}else{
 				if(p.UpdatePaciente(p)){

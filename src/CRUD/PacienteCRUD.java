@@ -7,7 +7,7 @@ package CRUD;
 
 import Aplicacao.Usuario;
 import Aplicacao.Paciente;
-
+import Aplicacao.Pedido;
 import Conexao.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -136,7 +136,18 @@ public class PacienteCRUD {
 	}
 	
 	public boolean remover(Paciente p) throws Exception {
-		System.out.println("cod =" + p.getCd_paciente());
+		
+		List<Pedido> pedidos = new ArrayList();
+		Pedido pe = new Pedido();
+		
+		pedidos = pe.BuscaPedido();
+		
+		for(int i=0;i<pedidos.size();i++) {
+			if(pedidos.get(i).getCd_paciente().equals(p.getCd_paciente())) {
+				return false;
+			}
+		}
+		
 		/* Define a SQL */
 		StringBuilder sql = new StringBuilder();
 		sql.append("delete from PACIENTE");
@@ -161,4 +172,17 @@ public class PacienteCRUD {
 
 		return true;
 	}
+	
+	private String formatDate(String datanasc) {
+		String array[] = new String[3];
+		array = datanasc.split("/");
+		return array[2]+"/"+array[1]+"/"+array[0];
+	}
+	
+	private String formatDatefromDatabase(String datanasc) {
+		String array[] = new String[3];
+		array = datanasc.split("-");
+		return array[2]+"/"+array[1]+"/"+array[0];
+	}
+
 }
