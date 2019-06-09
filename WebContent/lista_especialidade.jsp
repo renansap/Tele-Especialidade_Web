@@ -106,7 +106,7 @@
 											<%
 					Conselho c = new Conselho();
 					for (int i = 0; i < lista.size(); i++) {
-						String con = c.buscaConselho(Integer.toString(lista.get(i).getCd_conselho())).getDs_conselho();
+						String con = c.buscaConselho(lista.get(i).getCd_conselho()).getDs_conselho();
 						
 						out.write("<tr>");
 						out.write("<td> " + lista.get(i).getCd_especialidade() + " </td>");
