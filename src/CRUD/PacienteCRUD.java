@@ -30,11 +30,11 @@ public class PacienteCRUD {
 
 		sql.append(" NM_PACIENTE = \'");
 		sql.append(p.getNm_paciente());
-		sql.append("\'DT_NASCIMENTO = \'");
+		sql.append("\' and DT_NASCIMENTO = \'");
 		sql.append(p.getDt_nascimento());
-		sql.append("\'SEXO = \'");
+		sql.append("\' and SEXO = \'");
 		sql.append(p.getSexo());
-		sql.append("\'ALTURA = \'");
+		sql.append("\' and ALTURA = \'");
 		sql.append(p.getAltura());
 				
 		sql.append("\' where cd_paciente = \'");
