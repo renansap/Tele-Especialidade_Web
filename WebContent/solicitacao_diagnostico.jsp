@@ -70,6 +70,7 @@
 	String paciente = request.getParameter("paciente");
 	String diagnostico = request.getParameter("diagnostico");
 	String especialidade = request.getParameter("especialidade");
+	System.out.println(especialidade);
 	String anexo = request.getParameter("anexo");
 	String descricao = request.getParameter("descricao");
 	Pedido p = new Pedido();
@@ -242,7 +243,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <select class="form-control" id="exampleFormControlSelect1" name="especialidade" placeholder="Especialidade">
+                    <select class="form-control" id="exampleFormControlSelect1" name="especialidade" placeholder="Especialidade" required>
                         <option disabled selected>Especialidade</option>
                         <%
 					    	List<Especialidade> listaEspecialidade = ec.buscar();

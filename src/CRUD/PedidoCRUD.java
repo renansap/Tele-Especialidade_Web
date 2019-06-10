@@ -49,8 +49,9 @@ public class PedidoCRUD {
 			linha.setCd_diagnostico(resultado.getString("CD_DIAGNOSTICO"));
 			linha.setDs_observacao(resultado.getString("DS_OBSERVACAO"));
 			linha.setCd_usuario(resultado.getString("CD_USUARIO"));
-			linha.setCd_data_hr(resultado.getDate("CD_DATA_HR").toString());
-			linha.setCd_hr_data(resultado.getTime("CD_DATA_HR").toString());
+			
+			linha.setCd_data_hr(formatDate(resultado.getDate("CD_DATA_HR")));
+			linha.setCd_hr_data(formatTime(resultado.getTime("CD_DATA_HR")));
 			linha.setCd_status(resultado.getString("CD_STATUS"));
 			linha.setDs_resposta(resultado.getString("DS_RESPOSTA"));
 			linha.setDs_diagnostico(resultado.getString("DS_RESPOSTA"));
@@ -63,6 +64,8 @@ public class PedidoCRUD {
 			linha.setPeso(resultado.getString("PESO"));
 			linha.setAltura(resultado.getString("ALTURA"));
 			linha.setDs_nome(resultado.getString("DS_NOME"));
+			
+			System.out.println("ds: " + linha.getDs_diagnostico());
 		    
 			
 			/* Armazena a linha lida em uma lista */
@@ -77,6 +80,16 @@ public class PedidoCRUD {
 		/* Retorna a lista contendo o resultado da consulta */
 		return listaPedido;
 
+	}
+	
+	private String formatDate(Date date) { 
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy"); 
+		return dateFormat.format(date); 
+	}
+
+	private String formatTime(Date date) { 
+		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss"); 
+		return dateFormat.format(date); 
 	}
 
 	public boolean adicionar(Pedido p) throws Exception {

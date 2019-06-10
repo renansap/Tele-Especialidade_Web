@@ -17,7 +17,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
-<meta charset="ISO-8859-1">
+<meta charset=utf-8″>
 <title>Lista de Especialidade</title>
 </head>
 
@@ -98,20 +98,22 @@
 										<th>ID</th>
 										<th>Especialidade</th>
 										<th>Conselho</th>
-										<th>Status</th>
-										<th>Açao</th>
+										<th>Ação</th>
 									</tr>
 								</thead>
 								<tbody>
 											<%
 					Conselho c = new Conselho();
 					for (int i = 0; i < lista.size(); i++) {
+
 						String con = c.buscaConselho(lista.get(i).getCd_conselho()).getDs_conselho();
+			//String con = c.buscaConselho(Integer.toString(lista.get(i).getCd_conselho())).getDs_conselho();
+//github.com/renansap/Tele-Especialidade_Web.git
 						
 						out.write("<tr>");
 						out.write("<td> " + lista.get(i).getCd_especialidade() + " </td>");
 						out.write("<td> " + lista.get(i).getDs_especialidade() + " </td>");
-						out.write("<td> " + con + " </td>");
+						//out.write("<td> " + con + " </td>");
 						out.write("<td>"); 
 						if(lista.get(i).getSn_ativo().equals("S")){
 							out.write("Ativo");

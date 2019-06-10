@@ -30,7 +30,16 @@
 
 	l.setDs_nome(request.getParameter("nome"));
 	l.setDt_nascimento(request.getParameter("dt_nascimento"));
-	l.setCd_especialidade(request.getParameter("especialidade")); 
+	
+	if(especialidade != null && especialidade != ""){
+		String array[] = new String[3];
+		array = especialidade.split(" - ");
+		especialidade = array[0];
+		l.setCd_especialidade(especialidade); 
+		
+	}
+	
+	
 	l.setEmail(request.getParameter("email"));
 	l.setTelefone(request.getParameter("telefone"));
 	l.setSexo(request.getParameter("sexo"));
@@ -130,12 +139,16 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
+
 <title>Sistema Tele - Cadastro de Usuário</title>
 
 
 <script type="text/javascript">
 	$("#telefone").mask("(00) 00000-0000");
-	$("#data_nascimento").mask("0000/00/00");
+	$("#data_nascimento").mask("00/00/0000");
 </script>
 
 </head>
@@ -199,7 +212,7 @@
 											<%
 												for(int i=0;i<listaEspecialidades.size();i++){
 													out.write("<option>");
-													out.write(listaEspecialidades.get(i).getCd_conselho()+" - "+ listaEspecialidades.get(i).getDs_especialidade());
+													out.write(listaEspecialidades.get(i).getCd_especialidade()+" - "+ listaEspecialidades.get(i).getDs_especialidade());
 													out.write("</option>");
 												}
 											%>

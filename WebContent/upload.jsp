@@ -186,7 +186,7 @@
 									<div class="form-group">
 										<select class="form-control" id="exampleFormControlSelect1"
 											name="paciente">
-											<option disabled selected>Paciente</option>
+											<option disabled selected><%out.print(p.getNm_paciente()); %></option>
 											
 										</select>
 									</div>
