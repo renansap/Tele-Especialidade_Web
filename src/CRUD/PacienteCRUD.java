@@ -143,7 +143,10 @@ public class PacienteCRUD {
 		pedidos = pe.BuscaPedido();
 		
 		for(int i=0;i<pedidos.size();i++) {
+			System.out.println("pedido:" + pedidos.get(i).getCd_pedido());
+			System.out.println(pedidos.get(i).getCd_paciente() + " = " + p.getCd_paciente());
 			if(pedidos.get(i).getCd_paciente().equals(p.getCd_paciente())) {
+				System.out.println("teste");
 				return false;
 			}
 		}
