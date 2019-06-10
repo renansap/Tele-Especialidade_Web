@@ -29,7 +29,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.quicksearch/2.3.1/jquery.quicksearch.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  
 
-<title>Sistema Tele - Lista de Trabalho</title>
+<title>Sistema Apoio Diagnóstico - Lista de Trabalho</title>
 
 </head>
 
@@ -63,7 +63,7 @@
 					
 					<div><%if (p.solicitacoesPendentes() == 0)
 					{
-						out.write("class=\"card text-white\" bg-success\" o-hidden\" h-100\"");
+						out.write("<div class=\"card text-white bg-success o-hidden h-100");
 						
 						
 					}%>
