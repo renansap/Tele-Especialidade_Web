@@ -125,7 +125,12 @@ public class UsuarioCRUD {
 			lista.add(linha);
 		}
 		
+<<<<<<< HEAD
 	
+=======
+		//System.out.println(lista.get(5).getDt_nascimento());
+
+>>>>>>> branch 'master' of https://github.com/renansap/Tele-Especialidade_Web
 		/* Fecha a conexão */
 		resultado.close();
 		comando.close();

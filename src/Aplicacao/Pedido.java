@@ -52,9 +52,19 @@ public class Pedido {
     String altura;
     String ds_nome;
     String anexo;
+	String urgente;    
     
     
-    
+	
+	public String getUrgente() {
+		return urgente;
+	}
+
+	public void setUrgente(String urgente) {
+		this.urgente = urgente;
+	}
+
+   
 
 	public String getAnexo() {
 		return anexo;
