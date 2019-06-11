@@ -59,15 +59,15 @@
 
 				<!-- Icon Cards-->
 				<div class="row">
-					<div class="col-xl-3 col-sm-6 mb-3">
-					
+					<div class="col-xl-3 col-sm-6 mb-3">					
 					<div><%if (p.solicitacoesPendentes() == 0)
 					{
-						out.write("<div class=\"card text-white bg-success o-hidden h-100");
+						out.write("<div class=\"card text-white bg-success o-hidden h-100");					
 						
-						
-					}%>
-					</div>
+					}else{
+						out.write("<div class=\"card text-white bg-danger o-hidden h-100");
+					}
+					%>		
 					
 						<div class="card text-white bg-success o-hidden h-100">
 							<div class="card-body">
@@ -76,6 +76,7 @@
 								</div>
 								<div class="mr-5"><%out.print(p.solicitacoesPendentes()); %> Solicitações!</div>
 							</div>
+						</div>
 						</div>
 					</div>
 				</div>
@@ -107,7 +108,20 @@
 								<tbody>
 									<%
 										for (int i=0;i<lista.size(); i++) {
-											if(lista.get(i).getCd_status().equals("PENDENTE")){
+											
+											System.out.println("Urgente"+lista.get(i).getUrgente());
+											
+											if(lista.get(i).getCd_status().equals("PENDENTE")&&lista.get(i).getUrgente().equals("1")){
+												out.write("<tr class=\"table-danger\">");
+												out.write("<td> " + lista.get(i).getCd_diagnostico() + " </td>");
+												out.write("<td> " + lista.get(i).getDs_nome() + "</td>");
+											//	out.write("<td> " + lista.get(i).getDs_especialidade() + "</td>");
+												out.write("<td> " + lista.get(i).getCd_data_hr() + " - " + lista.get(i).getCd_hr_data() + "</td>");
+												out.write("<td><b>" + lista.get(i).getCd_status() + " </b></td>");
+												out.write("<td><a href=\"solicitacao_diagnostico.jsp?cod=" + lista.get(i).getCd_pedido() + "\"class=\"btn btn-default\">Acessar</a></td>");
+												out.write("<td><a href=\"realizacao_diagnostico.jsp?cod=" + lista.get(i).getCd_pedido() + "\"class=\"btn btn-success\">Atender</a></td>");
+											}
+											if(lista.get(i).getCd_status().equals("PENDENTE")&&lista.get(i).getUrgente().equals("0")){
 												out.write("<tr class=\"table-success\">");
 												out.write("<td> " + lista.get(i).getCd_diagnostico() + " </td>");
 												out.write("<td> " + lista.get(i).getDs_nome() + "</td>");
@@ -136,7 +150,7 @@
         					</script>
 						</div>
 					</div>
-					<div class="card-footer small text-muted">Atualizado hoje às
+					<div class="card-footer small text-muted"><% %>Atualizado hoje às
 						11:59 PM</div>
 				</div>
 

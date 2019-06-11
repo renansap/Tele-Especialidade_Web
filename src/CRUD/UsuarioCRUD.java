@@ -128,7 +128,7 @@ public class UsuarioCRUD {
 			lista.add(linha);
 		}
 		
-		System.out.println(lista.get(5).getDt_nascimento());
+		//System.out.println(lista.get(5).getDt_nascimento());
 
 		/* Fecha a conexão */
 		resultado.close();

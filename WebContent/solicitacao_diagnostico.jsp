@@ -73,6 +73,8 @@
 	System.out.println(especialidade);
 	String anexo = request.getParameter("anexo");
 	String descricao = request.getParameter("descricao");
+	String urgente = request.getParameter("urgente");
+	
 	Pedido p = new Pedido();
 	Pedido pe = new Pedido();	
 	Diagnostico d = new Diagnostico();
@@ -86,13 +88,18 @@
 		array = especialidade.split(" - ");
 		especialidade = array[0];
 	
-
+		if (urgente== null){
+			
+			urgente = "0";
+		}
+		
 		p.setCd_diagnostico(diagnostico);
 		p.setCd_especialidade(especialidade);
 		p.setCd_paciente(paciente);
 		p.setDs_diagnostico(descricao);
 		p.setCd_usuario(codigoUsuario);
 		p.setCd_status("PENDENTE");
+		p.setUrgente(urgente);
 		
 	}
 
@@ -269,11 +276,12 @@
 						%>
                     </select>
                 </div>
-<!--                   <div class="form-group">
-                    <label for="exampleFormControlFile1">Anexar Arquivo</label>
-                    <input type="file" class="form-control-file" name="arquivo" id="exampleFormControlFile1">
-                  </div> -->
-                
+  				
+  			<div class="custom-control custom-checkbox">
+  			<input type="checkbox" class="custom-control-input" id="customCheck1" name="urgente" value="1">
+  			<label class="custom-control-label" for="customCheck1">Urgente</label>
+
+			</div>
 
             <div class="col">
                 <div class="form-group">

@@ -22,7 +22,7 @@ public class PedidoCRUD {
 	public List<Pedido> buscar() throws Exception {
 		/* Define a SQL */
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT P.CD_PEDIDO, P.CD_PACIENTE, P.CD_DIAGNOSTICO, P.DS_OBSERVACAO, P.CD_USUARIO, P.CD_DATA_HR, P.CD_STATUS, P.DS_RESPOSTA, D.CD_DIAGNOSTICO, D.DS_DIAGNOSTICO, D.CD_ESPECIALIDADE, D.VALOR, PA.CD_PACIENTE, PA.NM_PACIENTE, PA.DT_NASCIMENTO, PA.SEXO, PA.ALTURA, PA.PESO, U.DS_NOME\r\n");
+		sql.append("SELECT P.CD_PEDIDO, P.CD_PACIENTE, P.CD_DIAGNOSTICO, P.DS_OBSERVACAO, P.CD_USUARIO, P.CD_DATA_HR, P.CD_STATUS, P.DS_RESPOSTA, D.CD_DIAGNOSTICO, D.DS_DIAGNOSTICO, D.CD_ESPECIALIDADE, D.VALOR, PA.CD_PACIENTE, PA.NM_PACIENTE, PA.DT_NASCIMENTO, PA.SEXO, PA.ALTURA, PA.PESO, U.DS_NOME, P.URGENTE\r\n");
 		sql.append("FROM PEDIDO P JOIN DIAGNOSTICO D ON D.CD_DIAGNOSTICO = P.CD_DIAGNOSTICO JOIN PACIENTE PA ON P.CD_PACIENTE = PA.CD_PACIENTE JOIN USUARIO U ON P.CD_USUARIO = U.CD_USUARIO ORDER BY CD_STATUS DESC, CD_data_hr DESC");
 		
 		/* Abre a conexão que criamos o retorno é armazenado na variavel conn */
@@ -64,6 +64,7 @@ public class PedidoCRUD {
 			linha.setPeso(resultado.getString("PESO"));
 			linha.setAltura(resultado.getString("ALTURA"));
 			linha.setDs_nome(resultado.getString("DS_NOME"));
+			linha.setUrgente(resultado.getString("urgente"));
 			
 			System.out.println("ds: " + linha.getDs_diagnostico());
 		    
@@ -97,7 +98,7 @@ public class PedidoCRUD {
 		StringBuilder sql = new StringBuilder();
 		sql.append("INSERT INTO PEDIDO");
 		sql.append(
-				" (CD_PACIENTE, CD_DIAGNOSTICO, DS_OBSERVACAO, CD_USUARIO, CD_STATUS, CD_ANEXO) values (");
+				" (CD_PACIENTE, CD_DIAGNOSTICO, DS_OBSERVACAO, CD_USUARIO, CD_STATUS, CD_ANEXO,URGENTE) values (");
 
 		/* Abre a conexão que criamos o retorno é armazenado na variavel conn */
 		Connection conn = Conexao.getConexaoMySQL();
@@ -114,6 +115,8 @@ public class PedidoCRUD {
 		sql.append(p.getCd_status());
 		sql.append("\', \'");
 		sql.append("0");
+		sql.append("\', \'");
+		sql.append(p.getUrgente());
 		sql.append("\');");
 
 		/* Mapeamento objeto relacional */
@@ -266,7 +269,7 @@ public class PedidoCRUD {
 	public Pedido buscarPedido(Pedido p) throws Exception {
 		/* Define a SQL */
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT P.CD_PEDIDO, P.CD_PACIENTE, P.CD_DIAGNOSTICO, P.DS_OBSERVACAO, P.CD_ANEXO, P.CD_USUARIO, P.CD_DATA_HR, P.CD_STATUS, P.DS_RESPOSTA, D.CD_DIAGNOSTICO, D.DS_DIAGNOSTICO, D.CD_ESPECIALIDADE, D.VALOR, E.DS_ESPECIALIDADE, PA.CD_PACIENTE, PA.NM_PACIENTE, PA.DT_NASCIMENTO, PA.SEXO, PA.ALTURA, PA.PESO, U.DS_NOME\r\n");
+		sql.append("SELECT P.CD_PEDIDO, P.CD_PACIENTE, P.CD_DIAGNOSTICO, P.DS_OBSERVACAO, P.CD_ANEXO, P.CD_USUARIO, P.CD_DATA_HR, P.CD_STATUS, P.DS_RESPOSTA, D.CD_DIAGNOSTICO, D.DS_DIAGNOSTICO, D.CD_ESPECIALIDADE, D.VALOR, E.DS_ESPECIALIDADE, PA.CD_PACIENTE, PA.NM_PACIENTE, PA.DT_NASCIMENTO, PA.SEXO, PA.ALTURA, PA.PESO, U.DS_NOME, P.URGENTE\r\n");
 		sql.append("FROM PEDIDO P JOIN DIAGNOSTICO D ON D.CD_DIAGNOSTICO = P.CD_DIAGNOSTICO JOIN ESPECIALIDADE E ON E.CD_ESPECIALIDADE = D.CD_ESPECIALIDADE JOIN PACIENTE PA ON P.CD_PACIENTE = PA.CD_PACIENTE JOIN USUARIO U ON P.CD_USUARIO = U.CD_USUARIO ");
 		sql.append("WHERE P.CD_PEDIDO = '");
 		sql.append(p.getCd_pedido());
@@ -313,6 +316,7 @@ public class PedidoCRUD {
 			linha.setDs_nome(resultado.getString("DS_NOME"));
 			linha.setAnexo(resultado.getString("CD_ANEXO"));
 			linha.setDs_diagnostico(resultado.getString("DS_DIAGNOSTICO"));
+			linha.setUrgente(resultado.getString("urgente"));
 		    
 		}
 
