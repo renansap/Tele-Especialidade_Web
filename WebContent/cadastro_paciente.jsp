@@ -30,11 +30,13 @@
 
 	p.setNm_paciente(request.getParameter("nome"));
 	p.setDt_nascimento(request.getParameter("dt_nascimento"));
-	p.setSexo(request.getParameter("Sexo"));
+	
 	p.setAltura(request.getParameter("Altura"));
 	p.setPeso(request.getParameter("peso"));
 
 	String cod = " ";
+	
+	
 	
 	cod = request.getParameter("cod");
 	if(cod!=" "&&cod!=null){
@@ -46,6 +48,18 @@
 
 	if (nm_paciente != null && dt_nascimento != null) {
 	
+		if(sexo.equals("Masculino")){
+			sexo="M";
+			p.setSexo(sexo);
+		}else{
+			sexo="F";
+			p.setSexo(sexo);
+		}
+		
+		String array[] = new String[3];
+		array = peso.split(" ");
+		peso = array[0];
+		p.setPeso(peso);
 		
 		System.out.println("cod: " + cod);
 		if(cod!=null){
@@ -135,9 +149,13 @@
 <title>Sistema Tele - Cadastro de Paciente</title>
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
 <script type="text/javascript">
 	$("#telefone").mask("(00) 00000-0000");
 	$("#data_nascimento").mask("0000/00/00");
+	$("#altura").mask("0.00");
 </script>
 
 </head>
@@ -194,25 +212,30 @@
 											%>
 											>
 									</div>
-
 									<div class="form-group">
-										<input type="text" name="Sexo" class="form-control"
-											placeholder="Sexo" required="required"
-											<%
-											if(cod!=null){
-												out.write("value=\"" + user.getSexo()+ "\"");
+										<select class="form-control" name="Sexo"
+											id="exampleFormControlSelect1" placeholder="Sexo">
+											<%if(cod!=null){
+												if(user.getSexo().equals("M")){
+													out.write("<option selected>Masculino</option>");
+												}else{
+													out.write("<option selected>Feminio</option>");												}
 											}else{
-												out.write("placeholder=\"Sexo\"");
+												out.write("<option disabled selected>Sexo</option>");
+												out.write("<option>Masculino</option>");
+												out.write("<option>Feminino</option>");
 											}
-											%>
-											>
+												%>
+										
+
+										</select>
 									</div>
 									<div class="form-group">
-										<input type="text" name="Altura" class="form-control"
-											placeholder="Altura" required="required"
+										<input type="text" name="Altura" id="altura" class="form-control"
+											placeholder="Altura em metros" required="required"
 											<%
 											if(cod!=null){
-												out.write("value=\"" + user.getAltura()+ "\"");
+												out.write("value=\"" + user.getAltura() + " m \"");
 											}else{
 												out.write("placeholder=\"Altura\"");
 											}
@@ -220,11 +243,11 @@
 											>
 									</div>
 									<div class="form-group">
-										<input type="text" name="peso" class="form-control"
-											placeholder="Peso" required="required"
+										<input type="text" name="peso" id="peso" class="form-control"
+											placeholder="Peso em kilos" required="required"
 											<%
 											if(cod!=null){
-												out.write("value=\"" + user.getPeso()+ "\"");
+												out.write("value=\"" + user.getPeso()+ " Kg\"");
 											}else{
 												out.write("placeholder=\"Peso\"");
 											}

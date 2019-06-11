@@ -30,13 +30,14 @@ public class PacienteCRUD {
 
 		sql.append(" NM_PACIENTE = \'");
 		sql.append(p.getNm_paciente());
-		sql.append("\' and DT_NASCIMENTO = \'");
+		sql.append("\', DT_NASCIMENTO = \'");
 		sql.append(p.getDt_nascimento());
-		sql.append("\' and SEXO = \'");
+		sql.append("\', SEXO = \'");
 		sql.append(p.getSexo());
-		sql.append("\' and ALTURA = \'");
+		sql.append("\', ALTURA = \'");
 		sql.append(p.getAltura());
-				
+		sql.append("\', PESO = \'");
+		sql.append(p.getPeso());
 		sql.append("\' where cd_paciente = \'");
 		sql.append(p.getCd_paciente());
 		sql.append("\'");
@@ -105,7 +106,7 @@ public class PacienteCRUD {
 		StringBuilder sql = new StringBuilder();
 		sql.append("insert into PACIENTE");
 		sql.append(
-				"(NM_PACIENTE, DT_NASCIMENTO, SEXO, ALTURA) values (");
+				"(NM_PACIENTE, DT_NASCIMENTO, SEXO, ALTURA, PESO) values (");
 
 		/* Abre a conexão que criamos o retorno é armazenado na variavel conn */
 		Connection conn = Conexao.getConexaoMySQL();
@@ -119,6 +120,8 @@ public class PacienteCRUD {
 		sql.append(p.getSexo());
 		sql.append("\', \'");
 		sql.append(p.getAltura());
+		sql.append("\', \'");
+		sql.append(p.getPeso());
 		sql.append("\');");
 
 		/* Mapeamento objeto relacional */

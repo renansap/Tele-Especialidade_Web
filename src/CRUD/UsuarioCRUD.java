@@ -90,14 +90,11 @@ public class UsuarioCRUD {
 		sql.append("FROM USUARIO");
 		
 
-        System.out.println("teste");
-
-		/* Abre a conexão que criamos o retorno é armazenado na variavel conn */
+     	/* Abre a conexão que criamos o retorno é armazenado na variavel conn */
 		Connection conn = Conexao.getConexaoMySQL();
 
 
-        System.out.println("teste");
-		
+      	
 		/* Mapeamento objeto relacional */
 		PreparedStatement comando = conn.prepareStatement(sql.toString());
 		// comando.setString(1, "%" + u.getCd_usuario()+ "%");
@@ -128,8 +125,7 @@ public class UsuarioCRUD {
 			lista.add(linha);
 		}
 		
-		System.out.println(lista.get(5).getDt_nascimento());
-
+	
 		/* Fecha a conexão */
 		resultado.close();
 		comando.close();
